@@ -1,6 +1,7 @@
 package prueba.pruebareddit;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,14 +29,13 @@ public class TableHandler implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String image = (String) infoList.get(position).get("url_banner");
+        Bitmap image = (Bitmap) infoList.get(position).get("url_banner");
         String title = (String) infoList.get(position).get("title_info");
         String description = (String) infoList.get(position).get("public_description");
 
         Intent info = new Intent(main, InfoActivity.class);
         info.putExtra("title", title);
         info.putExtra("description", description);
-        info.putExtra("url_banner", image);
 
         main.startActivity(info);
     }

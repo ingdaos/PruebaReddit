@@ -1,9 +1,11 @@
 package prueba.pruebareddit;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<HashMap<String, Object>> infoList;
     private TableHandler listenerRows;
+    private GetInfo getInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +30,21 @@ public class MainActivity extends AppCompatActivity {
         initApp();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (getInfo.getpDialog() != null && getInfo.getpDialog().isShowing()) {
+            getInfo.getpDialog().dismiss();
+        }
+        getInfo.setpDialog(null);
+    }
+
     private void initApp() {
         infoList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.list);
         listenerRows = new TableHandler(this, lv, infoList);
-        GetInfo getInfo = new GetInfo(this, url, infoList);
+        getInfo = new GetInfo(this, url, infoList);
         getInfo.execute();
-
     }
 
     public void loadItems() {
